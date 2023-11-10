@@ -1,0 +1,17 @@
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    apply plugin: "java"
+}
+
+subprojects {
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
