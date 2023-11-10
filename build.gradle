@@ -2,11 +2,8 @@ repositories {
     mavenCentral()
 }
 
-allprojects {
-    apply plugin: "java"
-}
-
 subprojects {
+    apply plugin: "java"
 
     test {
         useJUnitPlatform()
