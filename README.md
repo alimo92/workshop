@@ -1,4 +1,4 @@
-### Implementations 
+### Implementations
 
 - [x] Spring Liquibase
 - [x] Postgres docker-compose
