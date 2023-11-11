@@ -1,1 +1,27 @@
-### TO DO
+### Implementations 
+
+- [x] Spring Liquibase
+- [x] Postgres docker-compose
+- [x] SpringBoot Swagger
+- [x] SpringBoot Hibernate
+- [x] SpringBoot RestApis
+- [x] Gradle Spotless
+- [x] Gradle Separate dependencies.gradle file
+- [ ] Github Workflow codeScan
+- [ ] Github PR Template
+- [x] Github gitignore
+- [ ] Sentry
+- [ ] SpringBoot LocalStack(DynamoDb - S3)
+- [ ] SpringBoot Redis
+- [ ] SpringBoot Logger
+- [ ] SpringBoot Exception handling
+- [ ] SpringBoot ErrorResponses
+- [ ] SpringBoot Security Basic Auth
+- [ ] Run app through docker-compose
+- [ ] Helm Local deployment
+- [ ] Helm Local umbrella
+- [ ] SpringBoot Scheduled Task
+- [ ] Envoy
+- [ ] Open telemetry
+- [ ] SpringBoot web unit tests
+- [ ] SpringBoot integration tests
