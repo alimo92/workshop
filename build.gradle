@@ -1,14 +1,87 @@
-repositories {
-    mavenCentral()
+plugins {
+	id "com.diffplug.spotless" version "6.22.0"
 }
 
-subprojects {
-    apply plugin: "java"
+project.group = 'com.workshop'
+project.version = '0.0.1-SNNAPSHOT'
 
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events "passed", "skipped", "failed"
-        }
-    }
+apply from: "dependencies.gradle"
+
+allprojects {
+	apply plugin: "java"
+	apply plugin: "java-library"
+	apply plugin: "com.diffplug.spotless"
+
+	repositories {
+		mavenCentral()
+	}
+
+	java {
+		sourceCompatibility = '17'
+		targetCompatibility = '17'
+	}
+
+	dependencies {
+		implementation libraries.liquibase
+		implementation libraries.spring.values()
+		implementation libraries.postgres
+
+		runtimeOnly libraries.h2
+
+		compileOnly libraries.lombok
+		annotationProcessor libraries.lombok
+	}
+
+	test {
+		useJUnitPlatform()
+		testLogging {
+			events "passed", "skipped", "failed"
+		}
+	}
+
+	spotless {
+		// optional: limit format enforcement to just the files changed by this feature branch
+		ratchetFrom 'origin/main'
+
+		format 'misc', {
+			// define the files to apply `misc` to
+			target '**/*.gradle', '**/*.md', '.gitignore'
+
+			// define the steps to apply to those files
+			trimTrailingWhitespace()
+			indentWithTabs() // or spaces. Takes an integer argument if you don't like 4
+			endWithNewline()
+		}
+
+		yaml {
+			target '**/*.yaml'
+			jackson()
+		}
+
+		json {
+			target '**/*.json'
+			gson()
+					.indentWithSpaces(3) // optional: specify the number of spaces to use
+					.sortByKeys()        // optional: sort JSON by its keys
+					.escapeHtml()        // optional: escape HTML in values
+					.version('2.8.1')    // optional: specify version
+		}
+
+		java {
+			// Use the default importOrder configuration
+			importOrder()
+
+			removeUnusedImports()
+
+			// Cleanthat will refactor your code, but it may break your style: apply it before your formatter
+			cleanthat()
+
+			googleJavaFormat()
+
+			formatAnnotations()  // fixes formatting of type annotations, see below
+
+			licenseHeader '/* (C) $YEAR */' // or licenseHeaderFile
+			endWithNewline()
+		}
+	}
 }

@@ -1,3 +1,4 @@
 rootProject.name = 'workshop'
 
-include 'api'
+include 'workshop-api'
+include 'workshop-common'

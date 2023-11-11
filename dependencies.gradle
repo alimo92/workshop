@@ -1,0 +1,22 @@
+ext {
+	versions = [
+			spring   : '3.1.5',
+			lombok   : '1.18.30',
+			liquibase: '4.20.0',
+			h2       : '2.1.214',
+			postgres : '42.6.0'
+	]
+
+	libraries = [
+			lombok   : "org.projectlombok:lombok:${versions.lombok}",
+			liquibase: "org.liquibase:liquibase-core:${versions.liquibase}",
+			h2       : "com.h2database:h2:${versions.h2}",
+			postgres : "org.postgresql:postgresql:${versions.postgres}",
+			spring   : [
+					web          : "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
+					devTools     : "org.springframework.boot:spring-boot-devtools:${versions.spring}",
+					jpa          : "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}",
+					jdbc         : "org.springframework.boot:spring-boot-starter-data-jdbc:${versions.spring}"
+			]
+	]
+}
