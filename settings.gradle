@@ -1,4 +1,3 @@
 rootProject.name = 'workshop'
 
 include 'workshop-api'
-include 'workshop-common'

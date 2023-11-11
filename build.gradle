@@ -25,6 +25,7 @@ allprojects {
 		implementation libraries.liquibase
 		implementation libraries.spring.values()
 		implementation libraries.postgres
+		implementation libraries.guava
 
 		runtimeOnly libraries.h2
 
