@@ -10,3 +10,11 @@ services:
     - "POSTGRES_PASSWORD=password"
     - "POSTGRES_USER=user"
     - "POSTGRES_DB=users"
+  redis:
+    image: "redis:7.0-alpine"
+    container_name: "users-redis"
+    ports:
+    - "6379:6379"
+    environment:
+    - "REDIS_PORT=6379"
+    - "REDIS_DATABASES=1"

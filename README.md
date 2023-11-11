@@ -2,7 +2,7 @@
 
 - [x] docker-compose Postgres
 - [ ] docker-compose LocalStack(DynamoDb - S3)
-- [ ] docker-compose Redis
+- [x] docker-compose Redis
 - [ ] docker-compose Kafka
 - [ ] docker-compose Run app with DockerFile
 - [ ] docker-compose Envoy
@@ -10,10 +10,11 @@
 - [x] SpringBoot Liquibase
 - [x] SpringBoot Hibernate
 - [x] SpringBoot RestApis
+- [ ] SpringBoot Pagination
 - [x] Gradle Spotless
 - [x] Gradle Separate dependencies.gradle file
 - [ ] Github Workflow codeScan
-- [ ] Github PR Template
+- [x] Github PR Template
 - [x] Github gitignore
 - [ ] SpringBoot Sentry
 - [ ] SpringBoot TestContainers
@@ -21,7 +22,7 @@
 - [ ] SpringBoot Redis
 - [ ] SpringBoot S3
 - [ ] SpringBoot DynamoDb
-- [ ] SpringBoot Logger
+- [x] SpringBoot Logger
 - [ ] SpringBoot Exception handling
 - [ ] SpringBoot ErrorResponses
 - [ ] SpringBoot Security Basic Auth
