@@ -1,5 +1,5 @@
 /* (C) 2023 */
-package com.workshop.api.controller;
+package com.workshop.api.ping;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;

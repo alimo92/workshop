@@ -1,8 +1,13 @@
 ### Implementations
 
-- [x] Spring Liquibase
-- [x] Postgres docker-compose
+- [x] docker-compose Postgres
+- [ ] docker-compose LocalStack(DynamoDb - S3)
+- [ ] docker-compose Redis
+- [ ] docker-compose Kafka
+- [ ] docker-compose Run app with DockerFile
+- [ ] docker-compose Envoy
 - [x] SpringBoot Swagger
+- [x] SpringBoot Liquibase
 - [x] SpringBoot Hibernate
 - [x] SpringBoot RestApis
 - [x] Gradle Spotless
@@ -10,18 +15,20 @@
 - [ ] Github Workflow codeScan
 - [ ] Github PR Template
 - [x] Github gitignore
-- [ ] Sentry
-- [ ] SpringBoot LocalStack(DynamoDb - S3)
+- [ ] SpringBoot Sentry
+- [ ] SpringBoot TestContainers
+- [ ] SpringBoot WebFlux
 - [ ] SpringBoot Redis
+- [ ] SpringBoot S3
+- [ ] SpringBoot DynamoDb
 - [ ] SpringBoot Logger
 - [ ] SpringBoot Exception handling
 - [ ] SpringBoot ErrorResponses
 - [ ] SpringBoot Security Basic Auth
-- [ ] Run app through docker-compose
+- [ ] SpringBoot Scheduled Task
+- [ ] SpringBoot JWT Token Validation
 - [ ] Helm Local deployment
 - [ ] Helm Local umbrella
-- [ ] SpringBoot Scheduled Task
-- [ ] Envoy
 - [ ] Open telemetry
 - [ ] SpringBoot web unit tests
 - [ ] SpringBoot integration tests
