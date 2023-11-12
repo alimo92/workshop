@@ -10,6 +10,8 @@ services:
     - "POSTGRES_PASSWORD=password"
     - "POSTGRES_USER=user"
     - "POSTGRES_DB=users"
+    logging:
+      driver: "none"
   redis:
     image: "redis:7.0-alpine"
     container_name: "users-redis"
@@ -18,3 +20,12 @@ services:
     environment:
     - "REDIS_PORT=6379"
     - "REDIS_DATABASES=1"
+    logging:
+      driver: "none"
+  envoy:
+    image: "envoyproxy/envoy:dev-d3464bfd6d247530e669688c79e99c7245299df7"
+    container_name: "envoy"
+    ports:
+    - "10000:10000"
+    volumes:
+    - "../envoy/envoy.yaml:/etc/envoy/envoy.yaml"
