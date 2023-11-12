@@ -5,13 +5,16 @@
 - [x] docker-compose Redis
 - [ ] docker-compose Kafka
 - [ ] docker-compose Run app with DockerFile
-- [ ] docker-compose Envoy
+- [x] docker-compose Envoy
+- [x] docker-compose SonarQube
 - [x] SpringBoot Swagger
 - [x] SpringBoot Liquibase
 - [x] SpringBoot Hibernate
 - [x] SpringBoot RestApis
 - [ ] SpringBoot Pagination
+- [ ] SpringBoot WebClient
 - [x] Gradle Spotless
+- [x] Gradle SonarCube
 - [x] Gradle Separate dependencies.gradle file
 - [ ] Github Workflow codeScan
 - [x] Github PR Template
