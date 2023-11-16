@@ -7,9 +7,10 @@ import java.util.UUID;
 
 public record UserRequestBody(
     @NotBlank @JsonProperty("firstName") String firstName,
-    @NotBlank @JsonProperty("lastName") String lastName) {
+    @NotBlank @JsonProperty("lastName") String lastName,
+    @NotBlank @JsonProperty("balance") int balance) {
 
   public UserModel getModel() {
-    return new UserModel(UUID.randomUUID().toString(), firstName, lastName);
+    return new UserModel(UUID.randomUUID().toString(), firstName, lastName, balance);
   }
 }

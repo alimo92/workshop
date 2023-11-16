@@ -1,10 +1,12 @@
 /* (C) 2023 */
 package com.workshop.api.user;
 
+import com.workshop.api.error.WorkshopError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,7 @@ public class UserController {
   @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<UserResponse>> getUsers(
       @RequestParam(name = "id", required = false, defaultValue = "") List<String> ids) {
+
     List<UserResponse> users =
         userService.getUsers(ids).stream().map(UserModel::getResponse).toList();
     return new ResponseEntity<>(users, HttpStatus.OK);
@@ -49,7 +52,29 @@ public class UserController {
           @Schema(name = "id", description = "The user's id", type = "string", example = "user_id")
           @PathVariable(name = "id")
           String id) {
+    Optional<UserModel> user = userService.getUser(id);
+
+    if (user.isEmpty()) {
+      throw WorkshopError.NOT_FOUND.getResponse();
+    }
+
     userService.deleteUser(id);
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @Operation(summary = "Get User", tags = SWAGGER_USERS_TAG, description = "Get user by id")
+  @GetMapping(path = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UserResponse> getUser(
+      @NotBlank
+          @Schema(name = "id", description = "The user's id", type = "string", example = "user_id")
+          @PathVariable(name = "id")
+          String id) {
+    Optional<UserModel> user = userService.getUser(id);
+
+    if (user.isEmpty()) {
+      throw WorkshopError.NOT_FOUND.getResponse();
+    }
+
+    return new ResponseEntity<>(user.get().getResponse(), HttpStatus.OK);
   }
 }

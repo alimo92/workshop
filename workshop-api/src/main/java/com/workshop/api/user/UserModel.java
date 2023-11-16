@@ -15,8 +15,9 @@ public class UserModel {
   @Id private String id;
   private String firstName;
   private String lastName;
+  private int balance;
 
   public UserResponse getResponse() {
-    return new UserResponse(id, firstName, lastName);
+    return new UserResponse(id, firstName, lastName, balance);
   }
 }

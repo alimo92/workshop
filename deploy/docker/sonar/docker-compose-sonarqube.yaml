@@ -25,6 +25,7 @@ services:
       POSTGRES_USER: "sonar"
       POSTGRES_PASSWORD: "sonar"
       POSTGRES_DB: "sonar"
+      POSTGRES_PORT: "5432"
     ports:
     - "5432:5432"
 volumes:

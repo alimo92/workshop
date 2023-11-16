@@ -6,4 +6,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record UserResponse(
     @JsonProperty("id") String id,
     @JsonProperty("firstName") String firstName,
-    @JsonProperty("lastName") String lastName) {}
+    @JsonProperty("lastName") String lastName,
+    @JsonProperty("balance") int balance) {}

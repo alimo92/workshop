@@ -26,8 +26,8 @@
 - [ ] SpringBoot S3
 - [ ] SpringBoot DynamoDb
 - [x] SpringBoot Logger
-- [ ] SpringBoot Exception handling
-- [ ] SpringBoot ErrorResponses
+- [x] SpringBoot Exception handling
+- [x] SpringBoot ErrorResponses
 - [ ] SpringBoot Security Basic Auth
 - [ ] SpringBoot Scheduled Task
 - [ ] SpringBoot JWT Token Validation
