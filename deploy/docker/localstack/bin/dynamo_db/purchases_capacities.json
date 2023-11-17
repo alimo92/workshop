@@ -1,0 +1,4 @@
+{
+   "ReadCapacityUnits": 50,
+   "WriteCapacityUnits": 50
+}

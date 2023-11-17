@@ -1,33 +1,37 @@
 ### Implementations
 
-- [x] docker-compose Postgres
-- [ ] docker-compose LocalStack(DynamoDb - S3)
-- [x] docker-compose Redis
-- [ ] docker-compose Kafka
-- [ ] docker-compose Run app with DockerFile
+## Done
 - [x] docker-compose Envoy
 - [x] docker-compose SonarQube
 - [x] SpringBoot Swagger
 - [x] SpringBoot Liquibase
 - [x] SpringBoot Hibernate
 - [x] SpringBoot RestApis
-- [ ] SpringBoot Pagination
-- [ ] SpringBoot WebClient
+- [x] docker-compose Redis
+- [x] docker-compose Postgres
 - [x] Gradle Spotless
 - [x] Gradle SonarCube
 - [x] Gradle Separate dependencies.gradle file
-- [ ] Github Workflow codeScan
 - [x] Github PR Template
 - [x] Github gitignore
+- [x] SpringBoot Logger
+- [x] SpringBoot Exception handling
+- [x] SpringBoot ErrorResponses
+- [x] docker-compose LocalStack(DynamoDb - S3 - Secret Manager)
+
+## To do
+
+- [ ] docker-compose Kafka
+- [ ] docker-compose Run app with DockerFile
+- [ ] SpringBoot Pagination
+- [ ] SpringBoot WebClient
+- [ ] Github Workflow codeScan
 - [ ] SpringBoot Sentry
 - [ ] SpringBoot TestContainers
 - [ ] SpringBoot WebFlux
 - [ ] SpringBoot Redis
 - [ ] SpringBoot S3
 - [ ] SpringBoot DynamoDb
-- [x] SpringBoot Logger
-- [x] SpringBoot Exception handling
-- [x] SpringBoot ErrorResponses
 - [ ] SpringBoot Security Basic Auth
 - [ ] SpringBoot Scheduled Task
 - [ ] SpringBoot JWT Token Validation

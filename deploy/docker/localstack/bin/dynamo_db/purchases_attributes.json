@@ -1,0 +1,10 @@
+[
+   {
+      "AttributeName": "userId",
+      "AttributeType": "S"
+   },
+   {
+      "AttributeName": "purchaseId",
+      "AttributeType": "S"
+   }
+]

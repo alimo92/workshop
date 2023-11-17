@@ -1,0 +1,10 @@
+[
+   {
+      "AttributeName": "userId",
+      "KeyType": "HASH"
+   },
+   {
+      "AttributeName": "purchaseId",
+      "KeyType": "RANGE"
+   }
+]
