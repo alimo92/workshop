@@ -37,3 +37,28 @@ services:
     volumes:
     - "./localstack/init:/etc/localstack/init/ready.d"
     - "./localstack/bin:/opt/code/localstack/bin"
+  workshop:
+    build:
+      dockerfile: "Dockerfile"
+    container_name: "workshop"
+    ports:
+    - "8080:8080"
+    profiles:
+    - "app"
+    depends_on:
+      envoy:
+        condition: "service_started"
+      postgres:
+        condition: "service_started"
+      localstack:
+        condition: "service_started"
+      redis:
+        condition: "service_started"
+    volumes:
+    - "../../workshop-api/build/libs/workshop-api.jar:/home/workshop/app.jar"
+    environment:
+    - "RDS_HOST=users-postgres"
+    - "RDS_PORT=5432"
+    - "RDS_DATABASE=users"
+    - "RDS_USER_NAME=user"
+    - "RDS_PASSWORD=password"

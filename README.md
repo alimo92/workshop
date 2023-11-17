@@ -18,11 +18,11 @@
 - [x] SpringBoot Exception handling
 - [x] SpringBoot ErrorResponses
 - [x] docker-compose LocalStack(DynamoDb - S3 - Secret Manager)
+- [x] docker-compose Run app with DockerFile
 
 ## To do
 
 - [ ] docker-compose Kafka
-- [ ] docker-compose Run app with DockerFile
 - [ ] SpringBoot Pagination
 - [ ] SpringBoot WebClient
 - [ ] Github Workflow codeScan
@@ -40,3 +40,6 @@
 - [ ] Open telemetry
 - [ ] SpringBoot web unit tests
 - [ ] SpringBoot integration tests
+- [ ] README sonar deployment instruction
+- [ ] README local deployment instruction
+- [ ] README api doc
