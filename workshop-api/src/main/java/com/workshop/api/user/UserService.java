@@ -25,4 +25,8 @@ public class UserService {
   public void deleteUser(String id) {
     userRepository.deleteById(id);
   }
+
+  public long getUsersCount(String firstName) {
+    return userRepository.countByFirstName(firstName);
+  }
 }

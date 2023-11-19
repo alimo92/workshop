@@ -19,6 +19,7 @@
 - [x] SpringBoot ErrorResponses
 - [x] docker-compose LocalStack(DynamoDb - S3 - Secret Manager)
 - [x] docker-compose Run app with DockerFile
+- [x] SpringBoot Scheduled Task
 
 ## To do
 
@@ -33,7 +34,6 @@
 - [ ] SpringBoot S3
 - [ ] SpringBoot DynamoDb
 - [ ] SpringBoot Security Basic Auth
-- [ ] SpringBoot Scheduled Task
 - [ ] SpringBoot JWT Token Validation
 - [ ] Helm Local deployment
 - [ ] Helm Local umbrella
