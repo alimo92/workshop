@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./gradlew clean spotlessApply build
+./gradlew spotlessApply build
 
 if [ $# -eq 1 ] && [ "$1" = "--app" ]
 then
