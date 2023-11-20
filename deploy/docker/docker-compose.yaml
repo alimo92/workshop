@@ -46,7 +46,6 @@ services:
     - "8080:8080"
     profiles:
     - "app"
-    command: "echo HERE HERE HERE HERE"
     depends_on:
       envoy:
         condition: "service_started"
