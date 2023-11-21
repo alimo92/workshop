@@ -2,6 +2,8 @@
 
 * [Java corretto 17](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/)
+* [helm](https://helm.sh/docs/intro/install/)
 
 # Deploy local
 There are at least two ways to easily test and deploy the application locally. Start by deploying all the necessary resources for the application to work. e.g. databases like Postgres or DynamoDb
