@@ -37,6 +37,16 @@ services:
     volumes:
     - "./localstack/init:/etc/localstack/init/ready.d"
     - "./localstack/bin:/opt/code/localstack/bin"
+  mockserver:
+    image: "mockserver/mockserver:5.14.0"
+    container_name: "mockserver"
+    ports:
+    - "1080:1080"
+    environment:
+      MOCKSERVER_PROPERTY_FILE: "/config/mockserver.properties"
+      MOCKSERVER_INITIALIZATION_JSON_PATH: "/config/initializerJson.json"
+    volumes:
+    - "./mockserver:/config"
   workshop:
     build:
       context: "../../"
@@ -54,6 +64,8 @@ services:
       localstack:
         condition: "service_started"
       redis:
+        condition: "service_started"
+      mockserver:
         condition: "service_started"
     environment:
     - "RDS_HOST=users-postgres"

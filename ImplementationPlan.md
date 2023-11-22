@@ -23,6 +23,7 @@
 - [x] README sonar deployment instruction
 - [x] README local deployment instruction
 - [x] README api doc
+- [x] docker-compose mockserver
 
 ### To do
 
