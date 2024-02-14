@@ -24,12 +24,12 @@
 - [x] README local deployment instruction
 - [x] README api doc
 - [x] docker-compose mockserver
+- [x] SpringBoot WebClient
 
 ### To do
 
 - [ ] docker-compose Kafka
 - [ ] SpringBoot Pagination
-- [ ] SpringBoot WebClient
 - [ ] Github Workflow codeScan
 - [ ] SpringBoot Sentry
 - [ ] SpringBoot TestContainers

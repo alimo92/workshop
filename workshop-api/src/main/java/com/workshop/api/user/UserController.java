@@ -1,7 +1,9 @@
-/* (C) 2023 */
+/* (C) 2023-2024 */
 package com.workshop.api.user;
 
 import com.workshop.api.error.WorkshopError;
+import com.workshop.api.key.PublicKeysService;
+import com.workshop.api.oauth.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +24,31 @@ public class UserController {
 
   @Autowired private UserService userService;
 
+  @Autowired private AuthService authService;
+
+  @Autowired private PublicKeysService publicKeysService;
+
   @Operation(summary = "Create User", tags = SWAGGER_USERS_TAG, description = "Create a new user")
   @PostMapping(
       path = "/users",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserResponse> createUser(@RequestBody UserRequestBody user) {
+  public ResponseEntity<UserResponse> createUser(
+      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader,
+      @RequestBody UserRequestBody user) {
+
+    /*    Optional<SignedJWT> token = authService.getSignedToken(authorizationHeader);
+    if (token.isEmpty()) {
+      log.error("Invalid auth header value {}", authorizationHeader);
+      throw WorkshopError.INVALID_AUTH_HEADER.get();
+    }
+
+    boolean isVerified = publicKeysService.verifyToken(token.get());
+    if (!isVerified) {
+      log.error("Invalid token value");
+      throw WorkshopError.INVALID_AUTH_HEADER.get();
+    }*/
+
     UserResponse body = userService.createUser(user.getModel()).getResponse();
     return new ResponseEntity<>(body, HttpStatus.CREATED);
   }
@@ -55,7 +77,7 @@ public class UserController {
     Optional<UserModel> user = userService.getUser(id);
 
     if (user.isEmpty()) {
-      throw WorkshopError.NOT_FOUND.getResponse();
+      throw WorkshopError.NOT_FOUND.get();
     }
 
     userService.deleteUser(id);
@@ -72,7 +94,7 @@ public class UserController {
     Optional<UserModel> user = userService.getUser(id);
 
     if (user.isEmpty()) {
-      throw WorkshopError.NOT_FOUND.getResponse();
+      throw WorkshopError.NOT_FOUND.get();
     }
 
     return new ResponseEntity<>(user.get().getResponse(), HttpStatus.OK);

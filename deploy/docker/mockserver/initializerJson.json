@@ -1,18 +1,29 @@
 [
    {
       "httpRequest": {
-         "path": "/simpleFirst"
+         "method": "GET",
+         "path": "/oauth/jwks/rsa.json"
       },
       "httpResponse": {
-         "body": "some first response"
-      }
-   },
-   {
-      "httpRequest": {
-         "path": "/simpleSecond"
-      },
-      "httpResponse": {
-         "body": "some second response"
+         "body": {
+            "keys": [
+               {
+                  "e": "AQAB",
+                  "kid": "sig-2024-02-02T11:14:23Z",
+                  "kty": "RSA",
+                  "n": "nwqOnA2Kf3X_TUbsuUeRw_gq9GziBmoYMEdPapTG2I-1CPOHRhii-STxzLB5UiOkrAxVtapraT87Rn7eQ_01aIB-v84EDX7Tu5wgELtvHXqlsHuljJv0__rvorpV8HC2pihr0DRyb_f-w68UDHVt6g_WYkJWjWayWJclzG_HiwUIcF7h0bx2ZMMLcc0JGFxcjIGUNtuyo1kebcHaCDFszmoBS62NPjtk2dmhiHdHfipRegUF8mDFO_yM-BmEshZ3gBaBJo7uuYnuMRwDa6mrzYCORh1vv7VLY3gGyBlyxJ9DnC5HrGMj7Riwt6rAcm--k3roIzCxWBRgq8GicRm_hQ",
+                  "use": "sig"
+               },
+               {
+                  "e": "AQAB",
+                  "kid": "sig-2024-02-02T11:14:33Z",
+                  "kty": "RSA",
+                  "n": "hM-CtA7YnkDwuRPn_pDPi66J7FTjILRJI34BqND1s4x6__PvsR9e3_lPjDU22ivPPtO7anDszO96BItGd9X-cWSUmNboI88hR0HHseuRnaee-CY8hrMLEceswqho7Zo-hC1oWXkB-oaYio3N3qvfKNdrIdhJLYiphU7Ds5_LAaX18kaiB8hyUgzCNgsNOq9yyXMVr4VrpP1LQ0ygocKjTV0SjBTT6c-a42MkD6HBojyHFSWuch38ZRU-uoxRYPYbggK2-o0D7JIHSuH2vJPfAkXBye9B__IS-I7ndrMyFfSp0hctV4ioFIERzrhUpYGnXoWOC7-74Mkg2eB9cAW4Dw",
+                  "use": "sig"
+               }
+            ]
+         },
+         "statusCode": 200
       }
    }
 ]

@@ -1,6 +1,7 @@
-/* (C) 2023 */
+/* (C) 2023-2024 */
 package com.workshop.api.user;
 
+import com.workshop.api.key.PublicKeysService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
   @Autowired private UserRepository userRepository;
+
+  @Autowired private PublicKeysService publicKeysService;
 
   public UserModel createUser(UserModel user) {
     return userRepository.save(user);

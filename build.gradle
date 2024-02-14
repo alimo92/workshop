@@ -27,11 +27,14 @@ allprojects {
 		implementation libraries.spring.values()
 		implementation libraries.postgres
 		implementation libraries.guava
+		implementation libraries.nimbus
 
 		runtimeOnly libraries.h2
 
 		compileOnly libraries.lombok
 		annotationProcessor libraries.lombok
+
+		testImplementation libraries.spring_test
 	}
 
 	test {
