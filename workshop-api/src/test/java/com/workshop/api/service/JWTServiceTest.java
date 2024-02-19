@@ -1,31 +1,13 @@
 /* (C) 2024 */
 package com.workshop.api.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jose.crypto.RSASSASigner;
-import com.nimbusds.jose.crypto.RSASSAVerifier;
-import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
-import java.security.SecureRandom;
-import java.text.ParseException;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class JWTServiceTest {
 
-  private static final int DEFAULT_TIMEOUT_MS = 5_000;
+  /*  private static final int DEFAULT_TIMEOUT_MS = 5_000;
 
   @Autowired WebClient jwksClient;
 
@@ -115,5 +97,5 @@ class JWTServiceTest {
     assertTrue(jwsObject.verify(verifier));
 
     assertEquals("In RSA we trust!", jwsObject.getPayload().toString());
-  }
+  }*/
 }

@@ -2,36 +2,34 @@
 package com.workshop.api.oauth;
 
 import com.nimbusds.jwt.SignedJWT;
+import com.workshop.api.error.WorkshopError;
 import java.text.ParseException;
-import java.util.Optional;
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 public class AuthService {
-  public Optional<SignedJWT> getSignedToken(String authorizationHeader) {
+
+  public SignedJWT getSignedToken(String authorizationHeader) {
 
     if (!authorizationHeader.startsWith("Bearer ")) {
-      parsingErrorLog(authorizationHeader);
-      return Optional.empty();
+      log.error("Malformed auth header {}", authorizationHeader);
+      throw WorkshopError.INVALID_AUTH_HEADER.get();
     }
 
     String[] parts = authorizationHeader.split(" ");
     if (parts.length != 2) {
-      parsingErrorLog(authorizationHeader);
-      return Optional.empty();
+      log.error("Malformed auth header parts {}", Arrays.toString(parts));
+      throw WorkshopError.INVALID_AUTH_HEADER.get();
     }
 
     try {
-      return Optional.of(SignedJWT.parse(parts[1]));
+      return SignedJWT.parse(parts[1]);
     } catch (ParseException e) {
-      parsingErrorLog(authorizationHeader);
-      return Optional.empty();
+      log.error("Invalid token value {}", parts[1]);
+      throw WorkshopError.INVALID_TOKEN.get();
     }
-  }
-
-  private static void parsingErrorLog(String authorizationHeader) {
-    log.error("Error parsing signed token from header value {}", authorizationHeader);
   }
 }

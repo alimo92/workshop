@@ -1,7 +1,9 @@
 /* (C) 2023-2024 */
 package com.workshop.api.user;
 
+import com.nimbusds.jwt.SignedJWT;
 import com.workshop.api.error.WorkshopError;
+import com.workshop.api.exception.WorkshopJWKException;
 import com.workshop.api.key.PublicKeysService;
 import com.workshop.api.oauth.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,19 +37,22 @@ public class UserController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserResponse> createUser(
       @RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader,
-      @RequestBody UserRequestBody user) {
+      @RequestBody UserRequestBody user)
+      throws WorkshopJWKException {
 
-    /*    Optional<SignedJWT> token = authService.getSignedToken(authorizationHeader);
-    if (token.isEmpty()) {
-      log.error("Invalid auth header value {}", authorizationHeader);
-      throw WorkshopError.INVALID_AUTH_HEADER.get();
-    }
+    SignedJWT token = authService.getSignedToken(authorizationHeader);
 
-    boolean isVerified = publicKeysService.verifyToken(token.get());
+    boolean isVerified = publicKeysService.verifyToken(token);
     if (!isVerified) {
       log.error("Invalid token value");
-      throw WorkshopError.INVALID_AUTH_HEADER.get();
-    }*/
+      throw WorkshopError.INVALID_TOKEN.get();
+    }
+
+    boolean areClaimsVerified = publicKeysService.verifyClaims(token);
+    if (!areClaimsVerified) {
+      log.error("Invalid token claims");
+      throw WorkshopError.INVALID_TOKEN_CLAIMS.get();
+    }
 
     UserResponse body = userService.createUser(user.getModel()).getResponse();
     return new ResponseEntity<>(body, HttpStatus.CREATED);

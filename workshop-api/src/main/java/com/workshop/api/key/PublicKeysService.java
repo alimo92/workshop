@@ -2,20 +2,25 @@
 package com.workshop.api.key;
 
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSObject;
+import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.crypto.ECDSAVerifier;
-import com.nimbusds.jose.crypto.Ed25519Verifier;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jose.crypto.RSASSAVerifier;
+import com.nimbusds.jose.crypto.*;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.KeyType;
+import com.nimbusds.jose.proc.SecurityContext;
+import com.nimbusds.jwt.JWTClaimNames;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import com.nimbusds.jwt.proc.BadJWTException;
+import com.nimbusds.jwt.proc.DefaultJWTClaimsVerifier;
 import com.workshop.api.exception.WorkshopJWKException;
 import jakarta.annotation.PostConstruct;
 import java.text.ParseException;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,6 +38,13 @@ public class PublicKeysService {
   private static final AtomicReference<Map<String, JWSVerifier>> verifiersCache =
       new AtomicReference<>();
 
+  // Set the required JWT claims for access tokens
+  private static final DefaultJWTClaimsVerifier<SecurityContext> CLAIMS_VERIFIER =
+      new DefaultJWTClaimsVerifier<>(
+          new JWTClaimsSet.Builder().issuer("issuer_test").build(),
+          new HashSet<>(
+              Arrays.asList("testMap", JWTClaimNames.ISSUED_AT, JWTClaimNames.EXPIRATION_TIME)));
+
   @Autowired private WebClient jwkClient;
 
   @Scheduled(cron = "0 * * * * *", zone = "UTC")
@@ -45,7 +57,7 @@ public class PublicKeysService {
     }
   }
 
-  public boolean verifyToken(JWSObject token) {
+  public boolean verifyToken(SignedJWT token) {
     try {
       String keyId = token.getHeader().getKeyID();
       JWSVerifier verifier = verifiersCache.get().get(keyId);
@@ -53,9 +65,19 @@ public class PublicKeysService {
         log.error("Unknown key with id = {}", keyId);
         return false;
       }
-      return token.verify(verifiersCache.get().get(keyId));
+      return token.verify(verifier);
     } catch (JOSEException e) {
       log.warn("Invalid token. Failed verification");
+      return false;
+    }
+  }
+
+  public boolean verifyClaims(SignedJWT token) {
+    try {
+      CLAIMS_VERIFIER.verify(token.getJWTClaimsSet(), null);
+      return true;
+    } catch (BadJWTException | ParseException e) {
+      log.error("Failed claims verification", e);
       return false;
     }
   }
@@ -107,5 +129,36 @@ public class PublicKeysService {
     }
 
     return verifiers;
+  }
+
+  public JWSSigner getSigner(JWK key) {
+    try {
+      KeyType keyType = key.getKeyType();
+      if (keyType.equals(KeyType.RSA)) {
+        log.info("Creating {} signer", KeyType.RSA);
+        return new RSASSASigner(key.toRSAKey().toPrivateKey());
+      }
+
+      if (keyType.equals(KeyType.EC)) {
+        log.info("Creating {} signer", KeyType.EC);
+        return new ECDSASigner(key.toECKey());
+      }
+
+      if (keyType.equals(KeyType.OCT)) {
+        log.info("Creating {} signer", KeyType.OCT);
+        return new MACSigner(key.toOctetSequenceKey().toSecretKey());
+      }
+
+      if (keyType.equals(KeyType.OKP)) {
+        log.info("Creating {} signer", KeyType.OKP);
+        return new Ed25519Signer(key.toOctetKeyPair());
+      }
+
+      throw new WorkshopJWKException(String.format("Unsupported keyType %s", keyType));
+
+    } catch (JOSEException | WorkshopJWKException e) {
+      log.error("Failed creating jwk signer", e);
+      return null;
+    }
   }
 }
