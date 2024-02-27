@@ -4,7 +4,14 @@ package com.workshop.api.key;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.crypto.*;
+import com.nimbusds.jose.crypto.ECDSASigner;
+import com.nimbusds.jose.crypto.ECDSAVerifier;
+import com.nimbusds.jose.crypto.Ed25519Signer;
+import com.nimbusds.jose.crypto.Ed25519Verifier;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.KeyType;
@@ -23,6 +30,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,26 +114,40 @@ public class PublicKeysService {
             });
   }
 
+  private Optional<JWSVerifier> createVerifier(JWK publicKey) throws JOSEException {
+    KeyType keyType = publicKey.getKeyType();
+
+    if (keyType.equals(KeyType.RSA)) {
+      return Optional.of(new RSASSAVerifier(publicKey.toRSAKey().toRSAPublicKey()));
+    }
+
+    if (keyType.equals(KeyType.EC)) {
+      return Optional.of(new ECDSAVerifier(publicKey.toECKey().toECPublicKey()));
+    }
+
+    if (keyType.equals(KeyType.OCT)) {
+      return Optional.of(new MACVerifier(publicKey.toOctetSequenceKey().toSecretKey()));
+    }
+
+    if (keyType.equals(KeyType.OKP)) {
+      return Optional.of(new Ed25519Verifier(publicKey.toOctetKeyPair()));
+    }
+
+    return Optional.empty();
+  }
+
   private Map<String, JWSVerifier> createVerifiers(JWKSet publicKeys) throws Exception {
     Map<String, JWSVerifier> verifiers = new LinkedHashMap<>();
     for (JWK currentKey : publicKeys.getKeys()) {
-      KeyType keyType = currentKey.getKeyType();
       String keyId = currentKey.getKeyID();
-      JWSVerifier verifier;
+      Optional<JWSVerifier> verifier = createVerifier(currentKey);
 
-      if (keyType.equals(KeyType.RSA)) {
-        verifier = new RSASSAVerifier(currentKey.toRSAKey().toRSAPublicKey());
-      } else if (keyType.equals(KeyType.EC)) {
-        verifier = new ECDSAVerifier(currentKey.toECKey().toECPublicKey());
-      } else if (keyType.equals(KeyType.OCT)) {
-        verifier = new MACVerifier(currentKey.toOctetSequenceKey().toSecretKey());
-      } else if (keyType.equals(KeyType.OKP)) {
-        verifier = new Ed25519Verifier(currentKey.toOctetKeyPair());
+      if (verifier.isPresent()) {
+        verifiers.put(keyId, verifier.get());
       } else {
-        throw new WorkshopJWKException(String.format("Unsupported keyType %s", keyType));
+        throw new WorkshopJWKException(
+            String.format("Unsupported keyType %s", currentKey.getKeyType()));
       }
-
-      verifiers.put(keyId, verifier);
     }
 
     return verifiers;
